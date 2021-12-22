@@ -1,6 +1,7 @@
 
 import os.path
 import environ
+import django_heroku
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -129,3 +130,5 @@ LOGIN_URL = "login"
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+django_heroku.setting(locals())
