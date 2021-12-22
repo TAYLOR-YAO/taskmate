@@ -132,4 +132,4 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-django_heroku.setting(locals())
+django_heroku.settings(locals())
