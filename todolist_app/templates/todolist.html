@@ -49,15 +49,23 @@
                 {% for obj in all_tasks %}
                     {% if obj.done %}      
                     <tr class="row table-success">
-                        <td class="col-7"><del>{{obj.task}}</del></td>
-                        <td class="col-3"><a href="{% url 'pending_task' obj.pk %}"><button type="button" class="btn btn-dark">Mark This Pending</button></a></td>
+                        <td class="col-6"><del>{{obj.task}}</del></td>
+                        <td class="col-4">
+                            <a href="{% url 'pending_task' obj.pk %}" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Click To Mark This Task As Pending">
+                                Done<img src="https://img.icons8.com/fluency/20/000000/checkmark.png"/>
+                            </a>
+                        </td>
                         <td class="col-1"><a href="{% url 'edit_task' obj.pk %}"><img src="https://img.icons8.com/external-becris-lineal-becris/20/000000/external-edit-mintab-for-ios-becris-lineal-becris.png"/></a></td>
                         <td class="col-1"><a href="{% url 'delete_task' obj.pk %}"><img src="https://img.icons8.com/fluency/20/000000/filled-trash.png"/></a></td>
                     </tr>
                     {% else %}
                     <tr class="row">
-                        <td class="col-7">{{obj.task}}</td>
-                        <td class="col-3"><a href="{% url 'complete_task' obj.pk %}"><button type="button" class="btn btn-dark">Mark This Completed</button></a></td>
+                        <td class="col-6">{{obj.task}}</td>
+                        <td class="col-4">
+                            <a href="{% url 'complete_task' obj.pk %}" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Click To Mark This Task As Completed">
+                            Pending<img src="https://img.icons8.com/glyph-neue/20/fa314a/data-pending.png"/>
+                            </a>
+                        </td>
                         <td class="col-1"><a href="{% url 'edit_task' obj.pk %}"><img src="https://img.icons8.com/external-becris-lineal-becris/20/000000/external-edit-mintab-for-ios-becris-lineal-becris.png"/></a></td>
                         <td class="col-1"><a href="{% url 'delete_task' obj.pk %}"><img src="https://img.icons8.com/fluency/20/000000/filled-trash.png"/></a></td>
                     </tr>
