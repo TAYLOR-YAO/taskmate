@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title> Todo List - Taskmate</title>
+{% endblock title %}
+
+{% comment %} Body contents {% endcomment %}
+{% block content %}
+<div class="container">
+    </br>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% comment %} taskPost Request form {% endcomment %}
+    <form method="POST" class="row ">
+        {% csrf_token %}
+        <div class="col-lg-4">
+          {% comment %} <label for="staticEmail2" class="visually-show">Label</label> {% endcomment %}
+        </div>
+        <div class="col-lg-6">
+            <input type="text" class="form-control col-lg-6" name="task" placeholder="New Task?">
+        </div>
+        <div class="col-lg-2">
+            <button type="submit" class="btn btn-primary mb-3">Add Task</button>
+        </div>
+    </form>
+
+    </br>
+
+    {% comment %} Distplay Tasks in Table {% endcomment %}
+    <table class="table caption-top table-border table-hover table-responsive text-center">
+        <caption>List Of Tasks</caption>
+        <thead class="table-dark">
+        <tr class="row">
+            <th class="col-7">Task</th>
+            <th class="col-3">Done</th>
+            <th class="col-1">Edit</th>
+            <th class="col-1">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% if all_tasks %}
+                {% for obj in all_tasks %}
+                    {% if obj.done %}      
+                    <tr class="row table-success">
+                        <td class="col-7"><del>{{obj.task}}</del></td>
+                        <td class="col-3"><a href="{% url 'pending_task' obj.pk %}"><button type="button" class="btn btn-dark">Mark This Pending</button></a></td>
+                        <td class="col-1"><a href="{% url 'edit_task' obj.pk %}"><img src="https://img.icons8.com/external-becris-lineal-becris/20/000000/external-edit-mintab-for-ios-becris-lineal-becris.png"/></a></td>
+                        <td class="col-1"><a href="{% url 'delete_task' obj.pk %}"><img src="https://img.icons8.com/fluency/20/000000/filled-trash.png"/></a></td>
+                    </tr>
+                    {% else %}
+                    <tr class="row">
+                        <td class="col-7">{{obj.task}}</td>
+                        <td class="col-3"><a href="{% url 'complete_task' obj.pk %}"><button type="button" class="btn btn-dark">Mark This Completed</button></a></td>
+                        <td class="col-1"><a href="{% url 'edit_task' obj.pk %}"><img src="https://img.icons8.com/external-becris-lineal-becris/20/000000/external-edit-mintab-for-ios-becris-lineal-becris.png"/></a></td>
+                        <td class="col-1"><a href="{% url 'delete_task' obj.pk %}"><img src="https://img.icons8.com/fluency/20/000000/filled-trash.png"/></a></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="?page=1"><<</a></li>
+            {% if all_tasks.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{all_tasks.previous_page_number}}">{{all_tasks.previous_page_number}}</a></li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="?page={{all_tasks.number}}">{{all_tasks.number}}</a></li>
+            {% if all_tasks.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{all_tasks.next_page_number}}">{{all_tasks.next_page_number}}</a></li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="?page={{all_tasks.paginator.num_pages}}">>></a></li>
+        </ul>
+    </nav>
+
+</div>
+{% endblock content %}
