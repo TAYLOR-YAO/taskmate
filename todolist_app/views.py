@@ -86,13 +86,13 @@ def pending_task(request, task_id):
 
 def contact(request):
     context = {
-        'contact_text': "Our contacts page in design, visite us again shortly",
+        'contact_text': "Our contacts page in design, visite us again shortly. Thanks for visiting us!",
     }
     return render(request, 'contact.html', context)
 
 
 def about(request):
     context = {
-        'about_text': "About us page in design, visite us again shortly",
+        'about_text': "About us page in design, visite us again shortly. Thanks for visiting us!",
     }
     return render(request, 'about.html', context)
